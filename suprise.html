@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pratyusha's Love Vouchers 💝</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet">
+  <style>
+    *, 
+    *::before, 
+    *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+
+    body {
+      min-height: 100vh;
+      background: #110710;
+      font-family: 'Lato', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Stars ── */
+    .stars { 
+      position: fixed; 
+      inset: 0; 
+      pointer-events: none; 
+      z-index: 0; 
+      overflow: hidden; 
+    }
+
+    .star {
+      position: absolute; 
+      border-radius: 50%; 
+      background: #fff; 
+      opacity: 0;
+      animation: twinkle var(--d, 3s) ease-in-out infinite var(--delay, 0s);
+    }
+
+    @keyframes twinkle {
+      0%, 100% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      50% {
+        opacity: 0.85;
+        transform: scale(1.3);
+      }
+    }
+
+    /* ── Floating petals ── */
+    .petal {
+      position: fixed; 
+      font-size: 15px; 
+      opacity: 0; 
+      pointer-events: none; 
+      z-index: 0;
+      animation: floatDown var(--fd, 8s) linear infinite var(--fdelay, 0s);
+    }
+
+    @keyframes floatDown {
+      0% {
+        transform: translateY(-30px) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.6;
+      }
+      90% {
+        opacity: 0.4;
+      }
+      100% {
+        transform: translateY(110vh) rotate(400deg);
+        opacity: 0;
+      }
+    }
+
+    /* ── Page ── */
+    .page {
+      position: relative; 
+      z-index: 1;
+      max-width: 500px; 
+      margin: 0 auto;
+      padding: 44px 18px 70px;
+    }
+
+    /* ── Header ── */
+    .header { 
+      text-align: center; 
+      margin-bottom: 44px; 
+      animation: fadeDown 0.8s ease both; 
+    }
+
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header-tag {
+      display: inline-block; 
+      font-size: 10px; 
+      letter-spacing: 3.5px;
+      text-transform: uppercase; 
+      color: #f7a8c4;
+      background: rgba(247, 168, 196, 0.1); 
+      border: 1px solid rgba(247, 168, 196, 0.28);
+      padding: 5px 18px; 
+      border-radius: 20px; 
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 7vw, 40px); 
+      font-weight: 600;
+      color: #fff; 
+      line-height: 1.2; 
+      margin-bottom: 6px;
+    }
+
+    .header h1 span { 
+      font-style: italic; 
+      color: #f7a8c4; 
+    }
+
+    .header p { 
+      font-size: 12.5px; 
+      color: rgba(255, 255, 255, 0.38); 
+      letter-spacing: 1.2px; 
+    }
+
+    .divider {
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      gap: 10px; 
+      margin: 16px 0 0; 
+      color: rgba(247, 168, 196, 0.4); 
+      font-size: 13px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: ''; 
+      display: block; 
+      width: 52px; 
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(247, 168, 196, 0.35));
+    }
+
+    .divider::after { 
+      background: linear-gradient(90deg, rgba(247, 168, 196, 0.35), transparent); 
+    }
+
+    /* ── Voucher list ── */
+    .vlist { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 18px; 
+    }
+
+    /* ── Real voucher ticket ── */
+    .ticket {
+      display: flex;
+      border-radius: 16px;
+      overflow: visible;
+      cursor: pointer;
+      animation: fadeUp 0.55s ease both;
+      filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.55));
+      transition: filter 0.3s, transform 0.3s;
+      position: relative;
+    }
+
+    .ticket:nth-child(1) { animation-delay: 0.08s; }
+    .ticket:nth-child(2) { animation-delay: 0.16s; }
+    .ticket:nth-child(3) { animation-delay: 0.24s; }
+    .ticket:nth-child(4) { animation-delay: 0.32s; }
+
+    .ticket:hover {
+      transform: translateY(-4px) scale(1.015);
+      filter: drop-shadow(0 14px 38px rgba(194, 24, 91, 0.32));
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* stub (left colored slab) */
+    .ticket-stub {
+      width: 64px; 
+      flex-shrink: 0;
+      border-radius: 16px 0 0 16px;
+      display: flex; 
+      flex-direction: column;
+      align-items: center; 
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      padding: 20px 0;
+    }
+
+    .ticket-stub .stub-emoji { 
+      font-size: 26px; 
+    }
+
+    .ticket-stub .stub-no {
+      writing-mode: vertical-rl; 
+      text-orientation: mixed; 
+      transform: rotate(180deg);
+      font-family: 'Source Code Pro', monospace; 
+      font-size: 9px;
+      letter-spacing: 2px; 
+      color: rgba(255, 255, 255, 0.45); 
+      text-transform: uppercase;
+    }
+
+    /* perforation between stub and body */
+    .ticket-perf {
+      width: 0; 
+      flex-shrink: 0;
+      border-left: 2.5px dashed rgba(17, 7, 16, 0.9);
+      position: relative;
+    }
+
+    .ticket-perf::before, 
+    .ticket-perf::after {
+      content: '';
+      position: absolute;
+      width: 18px; 
+      height: 18px; 
+      border-radius: 50%;
+      background: #110710;
+      left: 50%; 
+      transform: translateX(-50%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .ticket-perf::before { top: -9px; }
+    .ticket-perf::after  { bottom: -9px; }
+
+    /* main body */
+    .ticket-body {
+      flex: 1;
+      background: #1e0d1a;
+      border-radius: 0 16px 16px 0;
+      padding: 18px 18px 14px 20px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-left: none;
+    }
+
+    /* subtle watermark */
+    .ticket-body::before {
+      content: attr(data-wm);
+      position: absolute; 
+      right: -8px; 
+      top: 50%;
+      transform: translateY(-50%) rotate(-12deg);
+      font-family: 'Playfair Display', serif;
+      font-size: 52px; 
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.03);
+      pointer-events: none; 
+      white-space: nowrap;
+      letter-spacing: -2px;
+    }
+
+    .ticket-body-top {
+      display: flex; 
+      align-items: flex-start; 
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .ticket-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px; 
+      font-weight: 600; 
+      color: #fff; 
+      line-height: 1.25;
+    }
+
+    .ticket-validity {
+      font-size: 9px; 
+      letter-spacing: 1.8px; 
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.35); 
+      text-align: right; 
+      line-height: 1.6;
+      flex-shrink: 0; 
+      margin-left: 10px;
+    }
+
+    .ticket-validity span { 
+      display: block; 
+      color: #f7a8c4; 
+      font-size: 10px; 
+    }
+
+    .ticket-tagline {
+      font-size: 12px; 
+      color: rgba(255, 255, 255, 0.45); 
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+
+    /* barcode strip */
+    .barcode {
+      display: flex; 
+      align-items: flex-end; 
+      gap: 1.5px;
+      height: 22px; 
+      margin-bottom: 4px;
+    }
+
+    .barcode-bar {
+      background: rgba(247, 168, 196, 0.25);
+      border-radius: 1px;
+    }
+
+    .ticket-footer {
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between;
+      margin-top: 2px;
+    }
+
+    .ticket-serial {
+      font-family: 'Source Code Pro', monospace;
+      font-size: 8.5px; 
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.22); 
+      text-transform: uppercase;
+    }
+
+    .ticket-cta {
+      font-size: 10px; 
+      letter-spacing: 1.5px; 
+      text-transform: uppercase;
+      color: rgba(247, 168, 196, 0.7); 
+      display: flex; 
+      align-items: center; 
+      gap: 4px;
+      transition: color 0.2s, gap 0.2s;
+    }
+
+    .ticket:hover .ticket-cta { 
+      color: #f7a8c4; 
+      gap: 7px; 
+    }
+
+    /* redeemed state */
+    .ticket.is-redeemed .ticket-body { opacity: 0.55; }
+    .ticket.is-redeemed .ticket-stub { opacity: 0.6; }
+    
+    .redeemed-stamp {
+      display: none;
+      position: absolute; 
+      top: 10px; 
+      right: 12px;
+      border: 2px solid rgba(80, 200, 120, 0.6); 
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 9px; 
+      letter-spacing: 2px; 
+      text-transform: uppercase;
+      color: #7ef5a0; 
+      transform: rotate(-6deg);
+      background: rgba(80, 200, 120, 0.08);
+      z-index: 5;
+    }
+
+    .ticket.is-redeemed .redeemed-stamp { 
+      display: block; 
+    }
+
+    /* ─── STUB COLORS per ticket ─── */
+    .stub-pink   { background: linear-gradient(175deg, #b5295e, #7c1040); }
+    .stub-mauve  { background: linear-gradient(175deg, #8e3569, #5c1e45); }
+    .stub-rose   { background: linear-gradient(175deg, #c0405a, #842535); }
+    .stub-purple { background: linear-gradient(175deg, #7249a8, #4a2870); }
+
+    /* ══════════════════════════
+       LIFETIME LOVE — SPECIAL
+    ══════════════════════════ */
+    .ticket-lifetime {
+      cursor: pointer;
+      animation: fadeUp 0.55s ease 0.42s both;
+      position: relative;
+      border-radius: 20px;
+      overflow: visible;
+      filter: drop-shadow(0 10px 40px rgba(194, 24, 91, 0.45));
+      transition: filter 0.35s, transform 0.35s;
+    }
+
+    .ticket-lifetime:hover {
+      transform: translateY(-6px) scale(1.018);
+      filter: drop-shadow(0 18px 55px rgba(194, 24, 91, 0.65));
+    }
+
+    /* golden animated border */
+    .lifetime-outer {
+      background: linear-gradient(135deg, #c2185b, #e91e8c, #ff6090, #c2185b);
+      background-size: 300% 300%;
+      animation: gradShift 4s ease infinite;
+      padding: 2px; 
+      border-radius: 20px;
+    }
+
+    @keyframes gradShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .lifetime-inner {
+      background: #110710;
+      border-radius: 18px;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* shimmer sweep */
+    .lifetime-inner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.04) 50%, transparent 60%);
+      background-size: 200% 100%;
+      animation: shimmer 3s ease infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .lifetime-header {
+      background: linear-gradient(135deg, #6a0832 0%, #c2185b 45%, #e91e8c 100%);
+      padding: 28px 26px 22px;
+      text-align: center;
+      position: relative;
+    }
+
+    .lifetime-emoji { 
+      font-size: 48px; 
+      display: block; 
+      margin-bottom: 6px;
+      animation: heartbeat 1.4s ease-in-out infinite; 
+      filter: drop-shadow(0 4px 10px rgba(255, 215, 0, 0.4)); 
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.15); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.1); }
+    }
+
+    .lifetime-header h2 {
+      font-family: 'Playfair Display', serif; 
+      font-size: 23px; 
+      font-weight: 600;
+      color: #fff; 
+      margin-bottom: 4px;
+    }
+
+    .lifetime-header p {
+      font-size: 10px; 
+      letter-spacing: 3px; 
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* notch cutouts */
+    .notch {
+      position: absolute; 
+      bottom: -14px; 
+      width: 28px; 
+      height: 28px;
+      background: #110710; 
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .notch-l { left: -14px; }
+    .notch-r { right: -14px; }
+
+    /* dashed perf */
+    .lifetime-perf {
+      display: flex; 
+      align-items: center; 
+      gap: 0; 
+      padding: 0 10px; 
+      margin: 14px 0 12px;
+    }
+
+    .lifetime-perf span { 
+      flex: 1; 
+      border-top: 2px dashed rgba(247, 168, 196, 0.18); 
+    }
+
+    .perf-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin: 0 2px;
+      background: rgba(247, 168, 196, 0.12); 
+      border: 1px solid rgba(247, 168, 196, 0.25);
+    }
+
+    .lifetime-body { 
+      padding: 4px 26px 12px; 
+      text-align: center; 
+    }
+
+    .lifetime-body p {
+      font-family: 'Lato', sans-serif; 
+      font-size: 14px; 
+      line-height: 1.85;
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .lifetime-body p em { 
+      font-style: italic; 
+      color: #f7a8c4; 
+    }
+
+    .lifetime-body p strong { 
+      color: #fff; 
+      font-weight: 700; 
+    }
+
+    .lifetime-action-prompt {
+      font-size: 12px;
+      letter-spacing: 2px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #f7a8c4;
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { 
+        transform: scale(1); 
+        opacity: 0.8; 
+        text-shadow: 0 0 4px rgba(247, 168, 196, 0); 
+      }
+      50% { 
+        transform: scale(1.04); 
+        opacity: 1; 
+        text-shadow: 0 0 12px rgba(247, 168, 196, 0.6); 
+      }
+    }
+
+    .lifetime-serial {
+      font-family: 'Source Code Pro', monospace; 
+      font-size: 9px;
+      letter-spacing: 2.5px; 
+      color: rgba(255, 255, 255, 0.18);
+      text-align: center; 
+      margin: 16px 0 18px; 
+      text-transform: uppercase;
+    }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      display: none; 
+      position: fixed; 
+      inset: 0;
+      background: rgba(8, 2, 8, 0.88); 
+      backdrop-filter: blur(10px);
+      z-index: 200; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 20px;
+    }
+
+    .modal-overlay.open { 
+      display: flex; 
+      animation: overlayIn 0.28s ease; 
+    }
+
+    @keyframes overlayIn { 
+      from { opacity: 0; } 
+      to { opacity: 1; } 
+    }
+
+    .modal {
+      position: relative; 
+      width: 100%; 
+      max-width: 360px;
+      background: #1a0a16; 
+      border: 1px solid rgba(247, 168, 196, 0.3);
+      border-radius: 22px; 
+      overflow: hidden;
+      animation: modalIn 0.33s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(0.82) translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .modal-band {
+      padding: 30px 22px 26px; 
+      text-align: center; 
+      position: relative;
+    }
+
+    .modal-band::after {
+      content: ''; 
+      position: absolute; 
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 18px; 
+      background: #1a0a16;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+
+    .mnotch {
+      position: absolute; 
+      bottom: -12px; 
+      width: 24px; 
+      height: 24px;
+      background: rgba(8, 2, 8, 0.88); 
+      border-radius: 50%;
+      border: 1px solid rgba(247, 168, 196, 0.15);
+    }
+    .mnotch-l { left: -12px; }
+    .mnotch-r { right: -12px; }
+
+    .m-emoji { 
+      font-size: 38px; 
+      display: block; 
+      margin-bottom: 10px; 
+    }
+
+    .modal-band h2 {
+      font-family: 'Playfair Display', serif; 
+      font-size: 21px;
+      color: #fff; 
+      font-weight: 600; 
+      margin-bottom: 4px;
+    }
+
+    .modal-band-tag { 
+      font-size: 10px; 
+      letter-spacing: 2.5px; 
+      text-transform: uppercase; 
+      color: rgba(255, 255, 255, 0.45); 
+    }
+
+    .modal-perf {
+      display: flex; 
+      align-items: center; 
+      padding: 0 10px; 
+      margin: 20px 0 16px;
+    }
+
+    .modal-perf span { 
+      flex: 1; 
+      border-top: 2px dashed rgba(247, 168, 196, 0.18); 
+    }
+
+    .mperf-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin: 0 2px;
+      background: rgba(247, 168, 196, 0.1);
+      border: 1px solid rgba(247, 168, 196, 0.22);
+    }
+
+    .modal-content { 
+      padding: 0 24px; 
+      text-align: center; 
+    }
+
+    .modal-content p { 
+      font-size: 14px; 
+      line-height: 1.8; 
+      color: rgba(255, 255, 255, 0.68); 
+    }
+
+    .modal-content p em { 
+      color: #f7a8c4; 
+      font-style: italic; 
+    }
+
+    .modal-content p strong { 
+      color: #fff; 
+      font-weight: 700; 
+    }
+
+    .m-serial {
+      font-family: 'Source Code Pro', monospace; 
+      font-size: 9px;
+      letter-spacing: 2px; 
+      color: rgba(255, 255, 255, 0.18);
+      text-align: center; 
+      margin: 16px 0 20px; 
+      text-transform: uppercase;
+    }
+
+    .modal-actions { 
+      padding: 0 22px 26px; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 10px; 
+    }
+
+    .btn-redeem {
+      width: 100%; 
+      padding: 13px; 
+      border: none; 
+      border-radius: 50px;
+      background: linear-gradient(135deg, #c2185b, #e91e8c);
+      color: #fff; 
+      font-family: 'Lato', sans-serif; 
+      font-size: 13.5px;
+      font-weight: 700; 
+      letter-spacing: 0.8px; 
+      cursor: pointer;
+      position: relative; 
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-redeem::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+      border-radius: 50px;
+    }
+
+    .btn-redeem:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 9px 30px rgba(194, 24, 91, 0.5); 
+    }
+
+    .btn-redeem.used { 
+      background: linear-gradient(135deg, #1b5e20, #388e3c); 
+      cursor: default; 
+    }
+
+    .btn-redeem.used:hover { 
+      transform: none; 
+    }
+
+    .btn-back {
+      width: 100%; 
+      padding: 11px; 
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      border-radius: 50px; 
+      background: transparent; 
+      color: rgba(255, 255, 255, 0.38);
+      font-family: 'Lato', sans-serif; 
+      font-size: 12.5px; 
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-back:hover { 
+      border-color: rgba(247, 168, 196, 0.38); 
+      color: rgba(255, 255, 255, 0.6); 
+    }
+
+    .modal-close {
+      position: absolute; 
+      top: 13px; 
+      right: 15px; 
+      width: 28px; 
+      height: 28px;
+      background: rgba(255, 255, 255, 0.09); 
+      border: none; 
+      border-radius: 50%;
+      color: #fff; 
+      font-size: 15px; 
+      cursor: pointer; 
+      display: flex;
+      align-items: center; 
+      justify-content: center; 
+      z-index: 2; 
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover { 
+      background: rgba(255, 255, 255, 0.18); 
+    }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center; 
+      margin-top: 48px;
+      font-size: 10.5px; 
+      color: rgba(255, 255, 255, 0.18); 
+      letter-spacing: 1.2px;
+      animation: fadeUp 0.6s ease 0.9s both;
+    }
+
+    .footer span { 
+      color: rgba(247, 168, 196, 0.45); 
+    }
+
+    @keyframes burst {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-90px) scale(0.15);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="stars" id="stars"></div>
+  <div id="petals"></div>
+
+  <div class="page">
+    <div class="header">
+      <div class="header-tag">✦ A gift from the heart ✦</div>
+      <h1>For My <span>Pratyusha</span></h1>
+      <div class="divider">❤</div>
+      <p style="margin-top:11px">Love vouchers · Crafted by Prayash</p>
+    </div>
+
+    <div class="vlist" id="vlist">
+
+      <div class="ticket" id="tc-v1" onclick="openModal('v1')">
+        <div class="redeemed-stamp">Used ✓</div>
+        <div class="ticket-stub stub-pink">
+          <span class="stub-emoji">💋</span>
+          <span class="stub-no">PK-001</span>
+        </div>
+        <div class="ticket-perf"></div>
+        <div class="ticket-body" data-wm="Kisses">
+          <div class="ticket-body-top">
+            <div class="ticket-title">Unlimited Kisses</div>
+            <div class="ticket-validity">Valid<span>Forever</span></div>
+          </div>
+          <div class="ticket-tagline">No limit · No permission needed · Just come close</div>
+          <div class="barcode" id="bc1"></div>
+          <div class="ticket-footer">
+            <span class="ticket-serial">PK-001 · KISSES · ∞</span>
+            <span class="ticket-cta">Open →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket" id="tc-v2" onclick="openModal('v2')">
+        <div class="redeemed-stamp">Used ✓</div>
+        <div class="ticket-stub stub-mauve">
+          <span class="stub-emoji">🤗</span>
+          <span class="stub-no">PK-002</span>
+        </div>
+        <div class="ticket-perf"></div>
+        <div class="ticket-body" data-wm="Hugs">
+          <div class="ticket-body-top">
+            <div class="ticket-title">Warm Hug Pass</div>
+            <div class="ticket-validity">Valid<span>Always</span></div>
+          </div>
+          <div class="ticket-tagline">For the heavy days · One long warm hold</div>
+          <div class="barcode" id="bc2"></div>
+          <div class="ticket-footer">
+            <span class="ticket-serial">PK-002 · HUGS · ∞</span>
+            <span class="ticket-cta">Open →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket" id="tc-v3" onclick="openModal('v3')">
+        <div class="redeemed-stamp">Used ✓</div>
+        <div class="ticket-stub stub-rose">
+          <span class="stub-emoji">🍕</span>
+          <span class="stub-no">PK-003</span>
+        </div>
+        <div class="ticket-perf"></div>
+        <div class="ticket-body" data-wm="Date">
+          <div class="ticket-body-top">
+            <div class="ticket-title">Our Perfect Day</div>
+            <div class="ticket-validity">Qty<span>× 01</span></div>
+          </div>
+          <div class="ticket-tagline">Your rules · Your mood · Your happiness</div>
+          <div class="barcode" id="bc3"></div>
+          <div class="ticket-footer">
+            <span class="ticket-serial">PK-003 · DATE · 01</span>
+            <span class="ticket-cta">Open →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket" id="tc-v4" onclick="openModal('v4')">
+        <div class="redeemed-stamp">Used ✓</div>
+        <div class="ticket-stub stub-purple">
+          <span class="stub-emoji">🎨</span>
+          <span class="stub-no">PK-004</span>
+        </div>
+        <div class="ticket-perf"></div>
+        <div class="ticket-body" data-wm="Art">
+          <div class="ticket-body-top">
+            <div class="ticket-title">Artist Queen Support</div>
+            <div class="ticket-validity">Valid<span>Forever</span></div>
+          </div>
+          <div class="ticket-tagline">Your crochet · Your drawings · Your #1 fan</div>
+          <div class="barcode" id="bc4"></div>
+          <div class="ticket-footer">
+            <span class="ticket-serial">PK-004 · ART · ∞</span>
+            <span class="ticket-cta">Open →</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket-lifetime" id="tc-v5" onclick="openLifetimeModal()">
+        <div class="lifetime-outer">
+          <div class="lifetime-inner">
+            <div class="lifetime-header">
+              <div class="notch notch-l"></div>
+              <div class="notch notch-r"></div>
+              <span class="lifetime-emoji">👑</span>
+              <h2>Lifetime Bond Pass</h2>
+              <p>Premium Eternal Access</p>
+            </div>
+            <div class="lifetime-perf">
+              <div class="perf-dot"></div>
+              <span></span>
+              <div class="perf-dot"></div>
+            </div>
+            <div class="lifetime-body">
+              <p>Gives <strong>Princess Pratyusha</strong> full absolute rights over <em>Prayash's</em> time, love, attention, and entire heart. Valid through all seasons of life.</p>
+              <div class="lifetime-action-prompt">press here ❤️🧿</div>
+            </div>
+            <div class="lifetime-serial">PK-FOREVER · SOULMATES · ∞</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      Made with <span>❤</span> for the best girl in the world.
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div class="modal-band" id="modalBand">
+        <div class="mnotch mnotch-l"></div>
+        <div class="mnotch mnotch-r"></div>
+        <span class="m-emoji" id="modalEmoji">💝</span>
+        <h2 id="modalTitle">Voucher Details</h2>
+        <div class="modal-band-tag" id="modalTag">Pass Identity</div>
+      </div>
+      <div class="modal-perf">
+        <div class="mperf-dot"></div>
+        <span></span>
+        <div class="mperf-dot"></div>
+      </div>
+      <div class="modal-content">
+        <p id="modalDescription">Special pass details item description text here.</p>
+        <div class="m-serial" id="modalSerial">PK-000 · GENERIC</div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-redeem" id="redeemBtn" onclick="processRedeem()">Redeem Voucher</button>
+        <button class="btn-back" onclick="closeModal()">Go Back</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Data Store for Vouchers
+    const voucherData = {
+      v1: {
+        title: "Unlimited Kisses",
+        emoji: "💋",
+        tag: "PK-001 · SWEETNESS",
+        desc: "Gives you full rights to demand <strong>kisses</strong> at any given hour. No arguments can void this pass. Can be stacked for combo actions.",
+        serial: "PK-001 · KISSES · ∞",
+        color: "linear-gradient(135deg, #b5295e, #7c1040)"
+      },
+      v2: {
+        title: "Warm Hug Pass",
+        emoji: "🤗",
+        tag: "PK-002 · COMFORT",
+        desc: "Redeemable when things feel heavy or tired. Entitles you to a tightly wrapped, warm, <strong>anxiety-melting hug</strong> for as long as you need it.",
+        serial: "PK-002 · HUGS · ∞",
+        color: "linear-gradient(135deg, #8e3569, #5c1e45)"
+      },
+      v3: {
+        title: "Our Perfect Day",
+        emoji: "🍕",
+        tag: "PK-003 · ADVENTURE",
+        desc: "A fully custom date planned entirely around your rules, your favorite meals, and your pace. <strong>Prayash pays, organizes, and admires</strong>.",
+        serial: "PK-003 · DATE · 01",
+        color: "linear-gradient(135deg, #c0405a, #842535)"
+      },
+      v4: {
+        title: "Artist Queen Support",
+        emoji: "🎨",
+        tag: "PK-004 · DEVOTION",
+        desc: "Instant access to your ultimate cheerleader. Valid for customized compliments, yarn-holding services, art feedback, or silent companionship while you craft.",
+        serial: "PK-004 · ART · ∞",
+        color: "linear-gradient(135deg, #7249a8, #4a2870)"
+      },
+      v5: {
+        title: "Lifetime Bond Pass",
+        emoji: "👑",
+        tag: "PREMIUM IDENTITY",
+        desc: "To my favorite person, my <strong>Princess Pratyusha</strong>:<br>This card is an eternal promise. No matter where life takes us, how much we grow, or what challenges we face, my love, care, and absolute devotion belong entirely to you. You are my safe space, my happiness, and my soulmate. <em>Always and forever, yours.</em> 🧿❤️",
+        serial: "PK-FOREVER · SOULMATES · ∞",
+        color: "linear-gradient(135deg, #c2185b, #ff6090)"
+      }
+    };
+
+    // Track local redeemed states
+    let state = {
+      v1: false, v2: false, v3: false, v4: false, v5: false
+    };
+
+    let activeVoucherId = null;
+
+    // Initialize Visual Effects
+    function initBackground() {
+      const starsContainer = document.getElementById('stars');
+      for (let i = 0; i < 45; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = star.style.height = (Math.random() * 2.5 + 1) + 'px';
+        star.style.setProperty('--d', (Math.random() * 3 + 2) + 's');
+        star.style.setProperty('--delay', (Math.random() * 5) + 's');
+        starsContainer.appendChild(star);
+      }
+
+      const petalsContainer = document.getElementById('petals');
+      const symbols = ['🌸', '✨', '💖', '💝', '💕'];
+      for (let i = 0; i < 15; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        petal.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+        petal.style.left = Math.random() * 100 + '%';
+        petal.style.setProperty('--fd', (Math.random() * 6 + 6) + 's');
+        petal.style.setProperty('--fdelay', (Math.random() * 8) + 's');
+        petalsContainer.appendChild(petal);
+      }
+    }
+
+    // Generate Barcode Graphics Dynamically
+    function buildBarcodes() {
+      for(let b = 1; b <= 4; b++) {
+        const bc = document.getElementById(`bc${b}`);
+        if(bc) {
+          for(let i = 0; i < 32; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'barcode-bar';
+            bar.style.width = (Math.random() > 0.6 ? 2.5 : 1.2) + 'px';
+            bar.style.height = (Math.random() * 40 + 60) + '%';
+            bc.appendChild(bar);
+          }
+        }
+      }
+    }
+
+    // Modal Operational Engines
+    function openModal(id) {
+      activeVoucherId = id;
+      const data = voucherData[id];
+      
+      document.getElementById('modalTitle').innerText = data.title;
+      document.getElementById('modalEmoji').innerText = data.emoji;
+      document.getElementById('modalTag').innerText = data.tag;
+      document.getElementById('modalDescription').innerHTML = data.desc;
+      document.getElementById('modalSerial').innerText = data.serial;
+      document.getElementById('modalBand').style.background = data.color;
+
+      const btn = document.getElementById('redeemBtn');
+      if (id === 'v5') {
+        if(state[id]) {
+          btn.innerText = "Bound Forever Protection Activated 🧿";
+          btn.classList.add('used');
+        } else {
+          btn.innerText = "Accept Eternal Bond ❤️";
+          btn.classList.remove('used');
+        }
+      } else {
+        if(state[id]) {
+          btn.innerText = "Already Redeemed! 💝";
+          btn.classList.add('used');
+        } else {
+          btn.innerText = "Redeem Voucher";
+          btn.classList.remove('used');
+        }
+      }
+
+      document.getElementById('modalOverlay').classList.add('open');
+    }
+
+    function openLifetimeModal() {
+      openModal('v5');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+      activeVoucherId = null;
+    }
+
+    function processRedeem() {
+      if(!activeVoucherId || state[activeVoucherId]) return;
+
+      state[activeVoucherId] = true;
+      
+      // Update structural item state
+      if(activeVoucherId !== 'v5') {
+        const ticketElement = document.getElementById(`tc-${activeVoucherId}`);
+        if(ticketElement) ticketElement.classList.add('is-redeemed');
+      } else {
+        const promptElement = document.querySelector('.lifetime-action-prompt');
+        if(promptElement) promptElement.innerHTML = "Bound Forever 👑❤️🧿";
+      }
+
+      // Handle modal dynamic transition elements
+      const btn = document.getElementById('redeemBtn');
+      if (activeVoucherId === 'v5') {
+        btn.innerText = "Core unlocked! Always yours 🔒✨";
+      } else {
+        btn.innerText = "Redeemed! Core unlocked 🔑";
+      }
+      btn.classList.add('used');
+
+      // Trigger heart burst particles
+      createBurstEffect();
+
+      setTimeout(() => {
+        closeModal();
+      }, 1200);
+    }
+
+    function createBurstEffect() {
+      for(let i = 0; i < 16; i++) {
+        const p = document.createElement('div');
+        p.innerText = Math.random() > 0.5 ? '💖' : '🧿';
+        p.style.position = 'fixed';
+        p.style.zIndex = '300';
+        p.style.left = '50%';
+        p.style.top = '50%';
+        p.style.fontSize = '24px';
+        p.style.pointerEvents = 'none';
+        
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 140 + 70;
+        const tx = Math.cos(angle) * velocity;
+        const ty = Math.sin(angle) * velocity - 40;
+
+        p.animate([
+          { transform: 'translate(-50%, -50%) scale(0.5)', opacity: 1 },
+          { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.3)`, opacity: 0.9 },
+          { transform: `translate(calc(-50% + ${tx*1.1}px), calc(-50% + ${ty + 80}px)) scale(0)`, opacity: 0 }
+        ], {
+          duration: 1400,
+          easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)',
+          fill: 'forwards'
+        });
+
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 1400);
+      }
+    }
+
+    // Window Event Mapping Initialization Setup
+    window.addEventListener('DOMContentLoaded', () => {
+      initBackground();
+      buildBarcodes();
+      
+      Object.keys(state).forEach(id => {
+        const el = document.getElementById(`tc-${id}`);
+        if(el && state[id]) el.classList.add('is-redeemed');
+      });
+    });
+  </script>
+</body>
+</html>
